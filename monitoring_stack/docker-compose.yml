@@ -1,0 +1,33 @@
+services:
+  glance:
+    container_name: glance
+    image: glanceapp/glance
+    environment:
+      - TZ=${TIMEZONE}
+    restart: unless-stopped
+    volumes:
+      - /opt/docker_apps/Monitoring/glance_docker_conf:/app/config 
+      - /opt/docker_apps/Monitoring/glance_docker_assets:/app/assets 
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - monitoring_network
+      - proxy_network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    volumes:
+      - /opt/docker_apps/Monitoring/grafana_docker_data:/var/lib/grafana
+    environment:
+      - TZ=${TIMEZONE}
+    restart: unless-stopped
+    networks:
+      - monitoring_network
+      - proxy_network
+
+networks:
+  monitoring_network:
+    name: monitoring_network
+    driver: bridge
+  proxy_network:
+    external: true

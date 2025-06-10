@@ -1,0 +1,178 @@
+services:
+  gluetun:
+    image: qmcgaw/gluetun:latest
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - "6881:6881/tcp"    # qBittorrent incoming peer port THROUGH VPN
+      - "6881:6881/udp"    # qBittorrent incoming peer port THROUGH VPN
+    environment:
+      - VPN_SERVICE_PROVIDER=${VPN_SERVICE_PROVIDER}
+      - VPN_TYPE=openvpn
+      - OPENVPN_USER=${OPENVPN_USER}
+      - OPENVPN_PASSWORD=${OPENVPN_PASSWORD}
+      - SERVER_COUNTRIES=Denmark,Sweden,Netherlands,Germany,United States,United Kingdom,Finland
+      - SERVER_CATEGORIES=P2P
+      - BLOCK_MALICIOUS=off
+      - TZ=${TIMEZONE}
+      - FIREWALL_VPN_INPUT_PORTS=6881
+    volumes:
+      - /opt/docker_apps/Autorreton/gluetun_docker_conf:/gluetun
+    networks: # Assign Gluetun to media_net
+      - media_network
+      - proxy_network
+    restart: unless-stopped
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    network_mode: "service:gluetun" # All qBit traffic via Gluetun; it will use Gluetun's IP on media_network
+    environment:
+      - PUID=1001 # UID of mediamanager
+      - PGID=1002 # GID of mediausers
+      - TZ={TIMEZONE}
+      - UMASK_SET=002
+      - WEBUI_PORT=8081 # qBittorrent listens on this port within Gluetun's network namespace
+    volumes:
+      - /opt/docker_apps/Autorreton/qbittorrent_docker_conf:/config
+      - /srv/torrents:/downloads
+    depends_on:
+      gluetun:
+        condition: service_healthy
+    restart: unless-stopped
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:develop
+    container_name: prowlarr
+    environment:
+      - PUID=1001 # UID of mediamanager
+      - PGID=1002 # GID of mediausers
+      - TZ={TIMEZONE}
+      - UMASK_SET=002
+    volumes:
+      - /opt/docker_apps/Autorreton/prowlarr_docker_conf:/config
+    networks: # Assign Prowlarr to media_net
+      - media_network
+      - proxy_network
+    depends_on:
+      - gluetun
+      - qbittorrent
+    restart: unless-stopped
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=1001 # UID of mediamanager
+      - PGID=1002 # GID of mediausers
+      - TZ={TIMEZONE}
+      - UMASK_SET=002
+    volumes:
+      - /opt/docker_apps/Autorreton/radarr_docker_conf:/config
+      - /srv/jellyfin/movies:/movies
+      - /srv/torrents:/downloads
+    networks: 
+      - media_network
+      - proxy_network
+    depends_on:
+      - gluetun
+      - qbittorrent
+      - prowlarr
+    restart: unless-stopped
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=1001 # UID of mediamanager
+      - PGID=1002 # GID of mediausers
+      - TZ={TIMEZONE}
+      - UMASK_SET=002
+    volumes:
+      - /opt/docker_apps/Autorreton/sonarr_docker_conf:/config
+      - /srv/jellyfin/tvshows:/tv
+      - /srv/torrents:/downloads
+    networks: 
+      - media_network
+      - proxy_network
+    depends_on:
+      - gluetun
+      - qbittorrent
+      - prowlarr
+    restart: unless-stopped
+
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    restart: unless-stopped
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /opt/docker_apps/Autorreton/bazarr_docker_conf:/config
+      - /opt/docker_apps/Autorreton/bazarr_docker_data:/data
+      - /srv/jellyfin/movies:/movies
+      - /srv/jellyfin/tvshows:/tv
+    networks: 
+      - media_network
+      - proxy_network
+
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    user: "104:113"
+    group_add:
+      - "${PGID}"   # mediamanager groupadd   
+    volumes:
+      - /opt/docker_apps/Autorreton/jellyfin_docker_conf:/config
+      - /opt/docker_apps/Autorreton/jellyfin_docker_cache:/cache 
+      - /srv/jellyfin/movies:/media/movies:ro
+      - /srv/jellyfin/tvshows:/media/tvshows:ro
+    environment:
+      - TZ={TIMEZONE}
+    networks:
+      - media_network
+      - cloudflare_tunnel
+      - proxy_network
+    restart: unless-stopped
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TOKEN} 
+    networks:
+      - cloudflare_tunnel
+      - proxy_network
+    depends_on:
+      - jellyfin
+
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    environment:
+      - PUID=1001 # UID of mediamanager
+      - PGID=1002 # GID of mediausers
+      - TZ={TIMEZONE}
+      - UMASK_SET=002
+    volumes:
+      - /opt/docker_apps/Autorreton/jellyseerr_docker_conf:/app/config
+    restart: unless-stopped
+    networks:
+      - media_network
+      - proxy_network
+  
+networks:
+  media_network:
+    driver: bridge
+    name: autorreton_medianet
+  cloudflare_tunnel:
+    driver: bridge
+    name: cloudflare_tunnel_network
+  proxy_network:
+    external: true

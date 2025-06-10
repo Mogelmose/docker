@@ -1,0 +1,22 @@
+services:
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:latest
+    container_name: homeassistant
+    network_mode: host
+    volumes:
+      - /opt/docker_apps/Home_Network/homeassistant_docker_conf:/config
+    environment:
+      - TZ=${TIMEZONE}
+    restart: unless-stopped
+
+  adguardhome:
+    image: adguard/adguardhome
+    container_name: adguardhome
+    network_mode: host
+    volumes:
+      - /opt/docker_apps/Home_Network/adguardhome_certs:/opt/adguardhome/certs
+      - /opt/docker_apps/Home_Network/adguardhome_docker_work:/opt/adguardhome/work
+      - /opt/docker_apps/Home_Network/adguardhome_docker_conf:/opt/adguardhome/conf
+    environment:
+      - TZ=${TIMEZONE}
+    restart: unless-stopped
