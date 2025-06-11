@@ -31,6 +31,12 @@ pages:
             pull-requests-limit: 5
             issues-limit: 3
             commits-limit: 3
+          - type: repository
+            show-source-icons: true
+            repository: Mogelmose/docker
+            pull-requests-limit: 5
+            issues-limit: 3
+            commits-limit: 3
 
       # --- Central Region ---
       - size: full
