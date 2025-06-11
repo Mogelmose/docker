@@ -19,4 +19,6 @@ services:
       - /opt/docker_apps/Home_Network/adguardhome_docker_conf:/opt/adguardhome/conf
     environment:
       - TZ=${TIMEZONE}
+      - ADGUARDHOME_USERNAME=${ADGUARDHOME_USERNAME}
+      - ADGUARDHOME_PASSWORD=${ADGUARDHOME_PASSWORD}
     restart: unless-stopped

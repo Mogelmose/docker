@@ -4,6 +4,8 @@ services:
     image: glanceapp/glance
     environment:
       - TZ=${TIMEZONE}
+      - ADGUARDHOME_USERNAME=${ADGUARDHOME_USERNAME}
+      - ADGUARDHOME_PASSWORD=${ADGUARDHOME_PASSWORD}
     restart: unless-stopped
     volumes:
       - /opt/docker_apps/Monitoring/glance_docker_conf:/app/config 

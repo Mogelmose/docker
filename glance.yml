@@ -17,6 +17,7 @@ pages:
             location: Vejle, Denmark
             units: metric
             hour-format: 24h
+            show-area-name: true
 
           - type: clock
 
@@ -31,13 +32,15 @@ pages:
             pull-requests-limit: 5
             issues-limit: 3
             commits-limit: 3
+            show-source-icon: true
           - type: repository
             show-source-icons: true
             repository: Mogelmose/docker
             pull-requests-limit: 5
             issues-limit: 3
             commits-limit: 3
-
+            show-source-icon: true
+            
       # --- Central Region ---
       - size: full
         widgets:
@@ -75,7 +78,7 @@ pages:
                 icon: di:radarr
               - title: Nginx Proxy Manager
                 url: https://proxy.blue-turtle.dk
-                icon: di:nginx
+                icon: di:nginx-proxy-manager
               - title: Jellyfin
                 url: https://jellyfin.blue-turtle.dk
                 check-url: http://jellyfin:8096
@@ -103,6 +106,13 @@ pages:
               - UCsBjURrPoezykLs9EqgamOA # Fireship
               - UCXuqSBlHAE6Xw-yeJA0Tunw # Linus Tech Tips
               - UCBJycsmduvYEL83R_U4JriQ # Marques Brownlee
+
+          - type: dns-stats
+            service: adguard
+            url: https://dns.blue-turtle.dk
+            username: ${env:ADGUARD_USERNAME}
+            password: ${env:ADGUARD_PASSWORD}
+            hour-format: 24h
 
       # --- Top Right Region ---
       - size: small
