@@ -47,44 +47,44 @@ pages:
               - title: AdGuardHome
                 url: https://dns.blue-turtle.dk
                 icon: di:adguard-home
-              - title: Portainer
-                url: https://docker.blue-turtle.dk
-                check-url: http://portainer:9000
-                icon: di:portainer
-              - title: Nginx Proxy Manager
-                url: https://proxy.blue-turtle.dk
-                icon: di:nginx
-              - title: Home Assistant
-                url: https://home.blue-turtle.dk
-                icon: di:home-assistant
               - title: Grafana
                 url: https://grafana.blue-turtle.dk
                 check-url: http://grafana:3000
                 icon: di:grafana
-              - title: Jellyfin
-                url: https://jellyfin.blue-turtle.dk
-                check-url: http://jellyfin:8096
-                icon: di:jellyfin
-              - title: Jellyseerr
-                url: https://findfilm.blue-turtle.dk
-                check-url: http://jellyseerr:5055
-                icon: di:jellyseerr            
-              - title: qBitTorrent
-                url: https://torrent.blue-turtle.dk
-                check-url: http://gluetun:8081
-                icon: di:qbittorrent            
               - title: Prowlarr
                 url: https://prowlarr.blue-turtle.dk
                 check-url: http://prowlarr:9696
-                icon: di:prowlarr
+                icon: di:prowlarr          
+              - title: Portainer
+                url: https://docker.blue-turtle.dk
+                check-url: http://portainer:9000
+                icon: di:portainer
+              - title: qBitTorrent
+                url: https://torrent.blue-turtle.dk
+                check-url: http://gluetun:8081
+                icon: di:qbittorrent
               - title: Radarr
                 url: https://radarr.blue-turtle.dk
                 check-url: http://radarr:7878
                 icon: di:radarr
+              - title: Nginx Proxy Manager
+                url: https://proxy.blue-turtle.dk
+                icon: di:nginx
+              - title: Jellyfin
+                url: https://jellyfin.blue-turtle.dk
+                check-url: http://jellyfin:8096
+                icon: di:jellyfin
               - title: Sonarr
                 url: https://sonarr.blue-turtle.dk
                 check-url: http://sonarr:8989
                 icon: di:sonarr
+              - title: Home Assistant
+                url: https://home.blue-turtle.dk
+                icon: di:home-assistant
+              - title: Jellyseerr
+                url: https://findfilm.blue-turtle.dk
+                check-url: http://jellyseerr:5055
+                icon: di:jellyseerr            
               - title: Bazarr
                 url: https://subs.blue-turtle.dk
                 check-url: http://bazarr:6767
