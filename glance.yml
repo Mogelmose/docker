@@ -20,11 +20,19 @@ pages:
             show-area-name: true
 
           - type: clock
+            hour-format: 24h
+
+          - type: dns-stats
+            service: adguard
+            url: https://dns.blue-turtle.dk
+            username: ${env:ADGUARD_USERNAME}
+            password: ${env:ADGUARD_PASSWORD}
+            hour-format: 24h
 
           - type: server-stats
             servers:
             - type: local
-              name: home-server
+              name: home-server          
 
           - type: repository
             show-source-icons: true
@@ -42,7 +50,7 @@ pages:
             show-source-icon: true
             
       # --- Central Region ---
-      - size: full
+      - size: full    
         widgets:
           - type: search
             autofocus: true
@@ -106,13 +114,6 @@ pages:
               - UCsBjURrPoezykLs9EqgamOA # Fireship
               - UCXuqSBlHAE6Xw-yeJA0Tunw # Linus Tech Tips
               - UCBJycsmduvYEL83R_U4JriQ # Marques Brownlee
-
-          - type: dns-stats
-            service: adguard
-            url: https://dns.blue-turtle.dk
-            username: ${env:ADGUARD_USERNAME}
-            password: ${env:ADGUARD_PASSWORD}
-            hour-format: 24h
 
       # --- Top Right Region ---
       - size: small
