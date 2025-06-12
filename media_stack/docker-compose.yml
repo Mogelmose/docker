@@ -76,7 +76,6 @@ services:
       - media_network
       - proxy_network
     depends_on:
-      - gluetun
       - qbittorrent
       - prowlarr
     restart: unless-stopped
@@ -97,7 +96,6 @@ services:
       - media_network
       - proxy_network
     depends_on:
-      - gluetun
       - qbittorrent
       - prowlarr
     restart: unless-stopped
@@ -135,7 +133,6 @@ services:
       - TZ={TIMEZONE}
     networks:
       - media_network
-      - cloudflare_tunnel
       - proxy_network
     restart: unless-stopped
 
@@ -164,6 +161,9 @@ services:
     networks:
       - media_network
       - proxy_network
+    depends_on:
+      - radarr
+      - sonarr
   
 networks:
   media_network:
