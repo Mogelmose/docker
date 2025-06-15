@@ -29,9 +29,9 @@ services:
     container_name: qbittorrent
     network_mode: "service:gluetun" # All qBit traffic via Gluetun; it will use Gluetun's IP on media_network
     environment:
-      - PUID=1001 # UID of mediamanager
-      - PGID=1002 # GID of mediausers
-      - TZ={TIMEZONE}
+      - PUID=${PUID} # UID of mediamanager
+      - PGID=${PGID} # GID of mediausers
+      - TZ=${TIMEZONE}
       - UMASK_SET=002
       - WEBUI_PORT=8081 # qBittorrent listens on this port within Gluetun's network namespace
     volumes:
@@ -46,9 +46,9 @@ services:
     image: lscr.io/linuxserver/prowlarr:develop
     container_name: prowlarr
     environment:
-      - PUID=1001 # UID of mediamanager
-      - PGID=1002 # GID of mediausers
-      - TZ={TIMEZONE}
+      - PUID=${PUID} # UID of mediamanager
+      - PGID=${PGID} # GID of mediausers
+      - TZ=${TIMEZONE}
       - UMASK_SET=002
     volumes:
       - /opt/docker_apps/Autorreton/prowlarr_docker_conf:/config
@@ -64,9 +64,9 @@ services:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
     environment:
-      - PUID=1001 # UID of mediamanager
-      - PGID=1002 # GID of mediausers
-      - TZ={TIMEZONE}
+      - PUID=${PUID} # UID of mediamanager
+      - PGID=${PGID} # GID of mediausers
+      - TZ=${TIMEZONE}
       - UMASK_SET=002
     volumes:
       - /opt/docker_apps/Autorreton/radarr_docker_conf:/config
@@ -84,9 +84,9 @@ services:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
     environment:
-      - PUID=1001 # UID of mediamanager
-      - PGID=1002 # GID of mediausers
-      - TZ={TIMEZONE}
+      - PUID=${PUID} # UID of mediamanager
+      - PGID=${PGID} # GID of mediausers
+      - TZ=${TIMEZONE}
       - UMASK_SET=002
     volumes:
       - /opt/docker_apps/Autorreton/sonarr_docker_conf:/config
@@ -105,8 +105,8 @@ services:
     container_name: bazarr
     restart: unless-stopped
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
+      - PUID=1001 # UID of mediamanager
+      - PGID=1002 # GID of mediausers
       - TZ=${TIMEZONE}
     volumes:
       - /etc/localtime:/etc/localtime:ro
@@ -123,14 +123,14 @@ services:
     container_name: jellyfin
     user: "104:113"
     group_add:
-      - "${PGID}"   # mediamanager groupadd   
+      - ${PGID}   # mediamanager groupadd   
     volumes:
       - /opt/docker_apps/Autorreton/jellyfin_docker_conf:/config
       - /opt/docker_apps/Autorreton/jellyfin_docker_cache:/cache 
       - /srv/jellyfin/movies:/media/movies:ro
       - /srv/jellyfin/tvshows:/media/tvshows:ro
     environment:
-      - TZ={TIMEZONE}
+      - TZ=${TIMEZONE}
     networks:
       - media_network
       - proxy_network
@@ -153,7 +153,7 @@ services:
     environment:
       - PUID=1001 # UID of mediamanager
       - PGID=1002 # GID of mediausers
-      - TZ={TIMEZONE}
+      - TZ=${TIMEZONE}
       - UMASK_SET=002
     volumes:
       - /opt/docker_apps/Autorreton/jellyseerr_docker_conf:/app/config
