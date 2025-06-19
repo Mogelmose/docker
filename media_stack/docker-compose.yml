@@ -16,7 +16,7 @@ services:
       - SERVER_CATEGORIES=P2P
       - BLOCK_MALICIOUS=off
       - TZ=${TIMEZONE}
-      - FIREWALL_VPN_INPUT_PORTS=6881
+      - FIREWALL_VPN_INPUT_PORTS=${FIREWALL_VPN_INPUT_PORTS}
     volumes:
       - /opt/docker_apps/Autorreton/gluetun_docker_conf:/gluetun
     networks: 
@@ -50,6 +50,7 @@ services:
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
+    network_mode: "service:gluetun"
     environment:
       - PUID=${PUID} # UID of mediamanager
       - PGID=${PGID} # GID of mediausers
@@ -57,9 +58,6 @@ services:
       - UMASK_SET=002
     volumes:
       - /opt/docker_apps/Autorreton/prowlarr_docker_conf:/config
-    networks: # Assign Prowlarr to media_net
-      - media_network
-      - proxy_network
     depends_on:
       - gluetun
       - qbittorrent
