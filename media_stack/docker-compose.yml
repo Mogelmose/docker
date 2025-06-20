@@ -47,10 +47,10 @@ services:
       timeout: 30s
       retries: 3
       start_period: 30s
+      
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
-    network_mode: "service:gluetun"
     environment:
       - PUID=${PUID} # UID of mediamanager
       - PGID=${PGID} # GID of mediausers
@@ -58,6 +58,9 @@ services:
       - UMASK_SET=002
     volumes:
       - /opt/docker_apps/Autorreton/prowlarr_docker_conf:/config
+    networks:
+      - media_network
+      - proxy_network
     depends_on:
       - gluetun
       - qbittorrent
