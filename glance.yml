@@ -21,7 +21,7 @@ pages:
 
           - type: clock
             hour-format: 24h
-
+                
           - type: dns-stats
             service: adguard
             url: https://dns.blue-turtle.dk
@@ -88,7 +88,7 @@ pages:
                 url: https://proxy.blue-turtle.dk
                 icon: di:nginx-proxy-manager
               - title: Jellyfin
-                url: https://jellyfin.blue-turtle.dk
+                url: https://film.blue-turtle.dk
                 check-url: http://jellyfin:8096
                 icon: di:jellyfin
               - title: Sonarr
@@ -124,7 +124,7 @@ pages:
             markets:
               - symbol: SPY
                 name: S&P 500
-              - symbol: NDX
+              - symbol: QQQ
                 name: NASDAQ-100
 
           - type: markets
