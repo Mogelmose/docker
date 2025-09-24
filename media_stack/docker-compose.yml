@@ -159,6 +159,8 @@ services:
       - /opt/docker_apps/Autorreton/jellyfin_docker_cache:/cache 
       - /srv/jellyfin/movies:/media/movies:ro
       - /srv/jellyfin/tvshows:/media/tvshows:ro
+    devices:
+      - /dev/dri:/dev/dri
     environment:
       - TZ=${TIMEZONE}
     networks:
