@@ -153,7 +153,9 @@ services:
     container_name: jellyfin
     user: "104:113"
     group_add:
-      - ${PGID}   # mediamanager groupadd   
+      - ${PGID}   # mediausers groupadd
+      - "44"
+      - "105"   
     volumes:
       - /opt/docker_apps/Autorreton/jellyfin_docker_conf:/config
       - /opt/docker_apps/Autorreton/jellyfin_docker_cache:/cache 
