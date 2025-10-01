@@ -23,6 +23,12 @@ services:
       - media_network
       - proxy_network
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "https://api.ipify.org"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
@@ -84,6 +90,8 @@ services:
       - /opt/docker_apps/Autorreton/radarr_docker_conf:/config
       - /srv/jellyfin/movies:/movies
       - /srv/torrents:/downloads
+      - /mnt/HyperX/media/movies:/movies-hyperx      
+      - /mnt/USB/media/movies:/movies-USB            
     networks: 
       - media_network
       - proxy_network
@@ -110,6 +118,8 @@ services:
       - /opt/docker_apps/Autorreton/sonarr_docker_conf:/config
       - /srv/jellyfin/tvshows:/tv
       - /srv/torrents:/downloads
+      - /mnt/HyperX/media/tvshows:/tv-hyperx         
+      - /mnt/USB/media/tvshows:/tv-USB               
     networks: 
       - media_network
       - proxy_network
@@ -129,15 +139,20 @@ services:
     container_name: bazarr
     restart: unless-stopped
     environment:
-      - PUID=1001 # UID of mediamanager
-      - PGID=1002 # GID of mediausers
+      - PUID=${PUID} # UID of mediamanager
+      - PGID=${PGID} # GID of mediausers
       - TZ=${TIMEZONE}
+      - UMASK_SET=002
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /opt/docker_apps/Autorreton/bazarr_docker_conf:/config
       - /opt/docker_apps/Autorreton/bazarr_docker_data:/data
       - /srv/jellyfin/movies:/movies
       - /srv/jellyfin/tvshows:/tv
+      - /mnt/HyperX/media/movies:/movies-hyperx      
+      - /mnt/HyperX/media/tvshows:/tv-hyperx         
+      - /mnt/USB/media/movies:/movies-USB            
+      - /mnt/USB/media/tvshows:/tv-USB               
     networks: 
       - media_network
       - proxy_network
@@ -154,13 +169,17 @@ services:
     user: "104:113"
     group_add:
       - ${PGID}   # mediausers groupadd
-      - "44"
-      - "105"   
+      - "44"      # Render groupadd
+      - "105"     # Video groupadd
     volumes:
       - /opt/docker_apps/Autorreton/jellyfin_docker_conf:/config
       - /opt/docker_apps/Autorreton/jellyfin_docker_cache:/cache 
       - /srv/jellyfin/movies:/media/movies:ro
       - /srv/jellyfin/tvshows:/media/tvshows:ro
+      - /mnt/HyperX/media/movies:/media/movies-hyperx:ro
+      - /mnt/HyperX/media/tvshows:/media/tvshows-hyperx:ro
+      - /mnt/USB/media/movies:/media/movies-USB:ro
+      - /mnt/USB/media/tvshows:/media/tvshows-USB:ro
     devices:
       - /dev/dri:/dev/dri
     environment:
@@ -189,8 +208,8 @@ services:
     image: fallenbagel/jellyseerr:latest
     container_name: jellyseerr
     environment:
-      - PUID=1001 # UID of mediamanager
-      - PGID=1002 # GID of mediausers
+      - PUID=${PUID} # UID of mediamanager
+      - PGID=${PGID} # UID of mediausers
       - TZ=${TIMEZONE}
       - UMASK_SET=002
     volumes:
