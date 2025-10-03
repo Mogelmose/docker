@@ -32,7 +32,15 @@ pages:
           - type: server-stats
             servers:
             - type: local
-              name: home-server          
+              name: home-server
+              hide-mountpoints-by-default: true
+              mountpoints:
+                "/": 
+                  name: Root
+                  hide: false
+                "/mnt/HyperX":
+                  name: HyperX Drive
+                  hide: false
 
           - type: repository
             show-source-icons: true
