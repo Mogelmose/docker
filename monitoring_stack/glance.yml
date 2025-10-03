@@ -1,0 +1,168 @@
+theme:
+  background-color: 0 0 6
+  card-background-color: 15 20 25
+  primary-color: 32 44 61
+  positive-color: 46 50 33
+  negative-color: 5 72 44
+pages:
+  - name: Home
+    width: wide
+    hide-desktop-navigation: true
+    center-vertically: true
+    columns:
+      # --- Top Left Region ---
+      - size: small
+        widgets:
+          - type: weather
+            location: Vejle, Denmark
+            units: metric
+            hour-format: 24h
+            show-area-name: true
+
+          - type: clock
+            hour-format: 24h
+                
+          - type: dns-stats
+            service: adguard
+            url: https://dns.blue-turtle.dk
+            username: ${env:ADGUARD_USERNAME}
+            password: ${env:ADGUARD_PASSWORD}
+            hour-format: 24h
+
+          - type: server-stats
+            servers:
+            - type: local
+              name: home-server
+              hide-mountpoints-by-default: true
+              mountpoints:
+                "/": 
+                  name: Root
+                  hide: false
+                "/mnt/HyperX":
+                  name: HyperX Drive
+                  hide: false
+
+          - type: repository
+            show-source-icons: true
+            repository: Mogelmose/blue-turtle.dk
+            pull-requests-limit: 5
+            issues-limit: 3
+            commits-limit: 3
+            show-source-icon: true
+          - type: repository
+            show-source-icons: true
+            repository: Mogelmose/docker
+            pull-requests-limit: 5
+            issues-limit: 3
+            commits-limit: 3
+            show-source-icon: true
+            
+      # --- Central Region ---
+      - size: full    
+        widgets:
+          - type: search
+            autofocus: true
+            search-engine: google
+            new-tab: true
+
+          - type: monitor
+            cache: 1m
+            title: Services
+            sites:
+              - title: AdGuardHome
+                url: https://dns.blue-turtle.dk
+                icon: di:adguard-home
+              - title: Grafana
+                url: https://grafana.blue-turtle.dk
+                check-url: http://grafana:3000
+                icon: di:grafana
+              - title: Prowlarr
+                url: https://prowlarr.blue-turtle.dk
+                check-url: http://prowlarr:9696
+                icon: di:prowlarr          
+              - title: Portainer
+                url: https://docker.blue-turtle.dk
+                check-url: http://portainer:9000
+                icon: di:portainer
+              - title: qBitTorrent
+                url: https://torrent.blue-turtle.dk
+                check-url: http://gluetun:8081
+                icon: di:qbittorrent
+              - title: Radarr
+                url: https://radarr.blue-turtle.dk
+                check-url: http://radarr:7878
+                icon: di:radarr
+              - title: Nginx Proxy Manager
+                url: https://proxy.blue-turtle.dk
+                icon: di:nginx-proxy-manager
+              - title: Jellyfin
+                url: https://film.blue-turtle.dk
+                check-url: http://jellyfin:8096
+                icon: di:jellyfin
+              - title: Sonarr
+                url: https://sonarr.blue-turtle.dk
+                check-url: http://sonarr:8989
+                icon: di:sonarr
+              - title: Home Assistant
+                url: https://home.blue-turtle.dk
+                icon: di:home-assistant
+              - title: Jellyseerr
+                url: https://findfilm.blue-turtle.dk
+                check-url: http://jellyseerr:5055
+                icon: di:jellyseerr            
+              - title: Bazarr
+                url: https://subs.blue-turtle.dk
+                check-url: http://bazarr:6767
+                icon: di:bazarr
+
+          - type: videos
+            channels:
+              - UCiFOL6V9KbvxfXvzdFSsqCw # Ken
+              - UCHnyfMqiRRG1u-2MsSQLbXA # Veritasium
+              - UCsBjURrPoezykLs9EqgamOA # Fireship
+              - UCXuqSBlHAE6Xw-yeJA0Tunw # Linus Tech Tips
+              - UCBJycsmduvYEL83R_U4JriQ # Marques Brownlee
+
+      # --- Top Right Region ---
+      - size: small
+        widgets:
+          - type: markets
+            title: Indices
+            sort-by: change
+            markets:
+              - symbol: SPY
+                name: S&P 500
+              - symbol: QQQ
+                name: NASDAQ-100
+
+          - type: markets
+            title: Stocks
+            sort-by: abosolute-change
+            markets:
+              - symbol: NVDA
+                name: NVIDIA
+              - symbol: AAPL
+                name: Apple
+              - symbol: MSFT
+                name: Microsoft
+              - symbol: MA
+                name: Mastercard
+              - symbol: GOOGL
+                name: Google
+              - symbol: SPGI
+                name: S&P Global
+              - symbol: PLTR
+                name: Palantir
+              - symbol: COST
+                name: Costco
+
+          - type: markets
+            title: Crypto
+            sort-by: abosolute-change
+            markets:
+              - symbol: BTC
+                name: Bitcoin
+              - symbol: ETH
+                name: Ethereum
+              - symbol: SOL
+                name: Solana
