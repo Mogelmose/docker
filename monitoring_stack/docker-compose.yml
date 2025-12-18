@@ -11,7 +11,7 @@ services:
       - /opt/docker_apps/Monitoring/glance_docker_conf:/app/config 
       - /opt/docker_apps/Monitoring/glance_docker_assets:/app/assets 
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /mnt/HyperX:/mnt/HyperX:ro
+      - /mnt/SanDisk:/mnt/SanDisk:ro
     networks:
       - monitoring_network
       - proxy_network
