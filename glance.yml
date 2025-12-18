@@ -38,8 +38,8 @@ pages:
                 "/": 
                   name: Root
                   hide: false
-                "/mnt/HyperX":
-                  name: HyperX Drive
+                "/mnt/SanDisk":
+                  name: SanDisk
                   hide: false
 
           - type: repository
