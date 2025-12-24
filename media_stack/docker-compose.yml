@@ -86,6 +86,7 @@ services:
       - /srv/torrents:/downloads
       - /mnt/USB/media/movies:/movies-USB    
       - /mnt/SanDisk/media/movies:/movies-SanDisk
+      - /mnt/SanDisk2/media/movies:/movies-SanDisk2
     networks: 
       - media_network
       - proxy_network
@@ -114,6 +115,7 @@ services:
       - /srv/torrents:/downloads         
       - /mnt/USB/media/tvshows:/tv-USB       
       - /mnt/SanDisk/media/tvshows:/tv-SanDisk
+      - /mnt/SanDisk2/media/tvshows:/tv-SanDisk2
     networks: 
       - media_network
       - proxy_network
@@ -147,6 +149,8 @@ services:
       - /mnt/USB/media/tvshows:/tv-USB  
       - /mnt/SanDisk/media/movies:/movies-SanDisk
       - /mnt/SanDisk/media/tvshows:/tv-SanDisk
+      - /mnt/SanDisk2/media/movies:/movies-SanDisk2
+      - /mnt/SanDisk2/media/tvshows:/tv-SanDisk2
     networks: 
       - media_network
       - proxy_network
@@ -174,6 +178,8 @@ services:
       - /mnt/USB/media/tvshows:/media/tvshows-USB:ro
       - /mnt/SanDisk/media/movies:/media/movies-SanDisk:ro
       - /mnt/SanDisk/media/tvshows:/media/tv-SanDisk:ro
+      - /mnt/SanDisk2/media/movies:/media/movies-SanDisk2:ro
+      - /mnt/SanDisk2/media/tvshows:/media/tv-SanDisk2:ro
     devices:
       - /dev/dri:/dev/dri
     environment:
