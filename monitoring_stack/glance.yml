@@ -41,6 +41,9 @@ pages:
                 "/mnt/SanDisk":
                   name: SanDisk
                   hide: false
+                "/mnt/SanDisk2":
+                  name: SanDisk2
+                  hide: false                
 
           - type: repository
             show-source-icons: true
