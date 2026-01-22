@@ -12,7 +12,7 @@ services:
       - VPN_SERVICE_PROVIDER=${VPN_SERVICE_PROVIDER}
       - VPN_TYPE=${VPN_TYPE}
       - WIREGUARD_PRIVATE_KEY=${WIREGUARD_PRIVATE_KEY}
-      - SERVER_COUNTRIES=Denmark,Sweden,Netherlands,Germany,United States,United Kingdom,Finland
+      - SERVER_COUNTRIES=Sweden,Netherlands,United States,United Kingdom,Finland
       - SERVER_CATEGORIES=P2P
       - BLOCK_MALICIOUS=off
       - TZ=${TIMEZONE}
@@ -47,10 +47,28 @@ services:
       timeout: 30s
       retries: 3
       start_period: 30s
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    network_mode: "service:gluetun"
+    environment:
+      - TZ=${TIMEZONE}
+    restart: unless-stopped
+    depends_on:
+      gluetun:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8191/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
       
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
+    network_mode: "service:gluetun"
     environment:
       - PUID=${PUID} # UID of mediamanager
       - PGID=${PGID} # GID of mediausers
@@ -58,12 +76,13 @@ services:
       - UMASK_SET=002
     volumes:
       - /opt/docker_apps/Autorreton/prowlarr_docker_conf:/config
-    networks:
-      - media_network
-      - proxy_network
     depends_on:
-      - gluetun
-      - qbittorrent
+      gluetun:
+        condition: service_healthy
+      qbittorrent:
+        condition: service_healthy
+      flaresolverr:
+        condition: service_healthy
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9696/"]
