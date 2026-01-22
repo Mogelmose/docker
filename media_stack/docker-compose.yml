@@ -51,12 +51,13 @@ services:
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
     container_name: flaresolverr
+    network_mode: "service:gluetun"
     environment:
       - TZ=${TIMEZONE}
-    networks:
-      - media_network
-      - proxy_network
     restart: unless-stopped
+    depends_on:
+      gluetun:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-fsS", "http://localhost:8191/health"]
       interval: 30s
@@ -67,6 +68,7 @@ services:
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
+    network_mode: "service:gluetun"
     environment:
       - PUID=${PUID} # UID of mediamanager
       - PGID=${PGID} # GID of mediausers
@@ -74,13 +76,13 @@ services:
       - UMASK_SET=002
     volumes:
       - /opt/docker_apps/Autorreton/prowlarr_docker_conf:/config
-    networks:
-      - media_network
-      - proxy_network
     depends_on:
-      - gluetun
-      - qbittorrent
-      - flaresolverr
+      gluetun:
+        condition: service_healthy
+      qbittorrent:
+        condition: service_healthy
+      flaresolverr:
+        condition: service_healthy
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9696/"]
