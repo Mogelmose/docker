@@ -47,6 +47,22 @@ services:
       timeout: 30s
       retries: 3
       start_period: 30s
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+      - TZ=${TIMEZONE}
+    networks:
+      - media_network
+      - proxy_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8191/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
       
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
@@ -64,6 +80,7 @@ services:
     depends_on:
       - gluetun
       - qbittorrent
+      - flaresolverr
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9696/"]
