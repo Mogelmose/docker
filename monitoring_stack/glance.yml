@@ -81,7 +81,7 @@ pages:
                 icon: di:grafana
               - title: Prowlarr
                 url: https://prowlarr.blue-turtle.dk
-                check-url: http://prowlarr:9696
+                check-url: http://gluetun:9696
                 icon: di:prowlarr          
               - title: Portainer
                 url: https://docker.blue-turtle.dk
