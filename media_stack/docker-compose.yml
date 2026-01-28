@@ -17,6 +17,8 @@ services:
       - BLOCK_MALICIOUS=off
       - TZ=${TIMEZONE}
       - FIREWALL_VPN_INPUT_PORTS=${FIREWALL_VPN_INPUT_PORTS}
+      - WIREGUARD_MTU=1360
+      - DNS_ADDRESS=127.0.0.11
     volumes:
       - /opt/docker_apps/Autorreton/gluetun_docker_conf:/gluetun
     networks: 
