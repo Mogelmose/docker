@@ -4,6 +4,10 @@ services:
     container_name: gluetun
     cap_add:
       - NET_ADMIN
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=1
+      - net.ipv6.conf.default.disable_ipv6=1
+      - net.ipv6.conf.lo.disable_ipv6=1
     devices:
       - /dev/net/tun:/dev/net/tun
     ports:
@@ -18,7 +22,8 @@ services:
       - TZ=${TIMEZONE}
       - FIREWALL_VPN_INPUT_PORTS=${FIREWALL_VPN_INPUT_PORTS}
       - WIREGUARD_MTU=1360
-      - DNS_ADDRESS=127.0.0.11
+      - DNS_ADDRESS=1.1.1.1
+      - DOTNET_SYSTEM_NET_DISABLEIPV6=1
     volumes:
       - /opt/docker_apps/Autorreton/gluetun_docker_conf:/gluetun
     networks: 
@@ -76,6 +81,8 @@ services:
       - PGID=${PGID} # GID of mediausers
       - TZ=${TIMEZONE}
       - UMASK_SET=002
+      - DOTNET_SYSTEM_NET_HTTP_SOCKETSHTTPHANDLER_HTTP2SUPPORT=0
+      - DOTNET_SYSTEM_NET_DISABLEIPV6=1
     volumes:
       - /opt/docker_apps/Autorreton/prowlarr_docker_conf:/config
     depends_on:
@@ -220,7 +227,7 @@ services:
     image: cloudflare/cloudflared:latest
     container_name: cloudflared
     restart: unless-stopped
-    command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TOKEN} 
+    command: tunnel --no-autoupdate --protocol http2 run --token ${CLOUDFLARE_TOKEN} 
     networks:
       - cloudflare_tunnel
       - proxy_network
