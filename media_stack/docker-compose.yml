@@ -115,9 +115,10 @@ services:
       - /mnt/USB/media/movies:/movies-USB    
       - /mnt/SanDisk/media/movies:/movies-SanDisk
       - /mnt/SanDisk2/media/movies:/movies-SanDisk2
-    networks: 
-      - media_network
-      - proxy_network
+    networks:
+      media_network:
+        ipv4_address: 172.19.0.6
+      proxy_network: {}
     depends_on:
       - qbittorrent
       - prowlarr
@@ -144,9 +145,10 @@ services:
       - /mnt/USB/media/tvshows:/tv-USB       
       - /mnt/SanDisk/media/tvshows:/tv-SanDisk
       - /mnt/SanDisk2/media/tvshows:/tv-SanDisk2
-    networks: 
-      - media_network
-      - proxy_network
+    networks:
+      media_network:
+        ipv4_address: 172.19.0.5
+      proxy_network: {}
     depends_on:
       - qbittorrent
       - prowlarr
@@ -260,6 +262,9 @@ networks:
   media_network:
     driver: bridge
     name: autorreton_medianet
+    ipam:
+      config:
+        - subnet: 172.19.0.0/16
   cloudflare_tunnel:
     driver: bridge
     name: cloudflare_tunnel_network
