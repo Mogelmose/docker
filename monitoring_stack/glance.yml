@@ -110,6 +110,7 @@ pages:
                 icon: di:sonarr
               - title: Blue Turtle
                 url: https://spilleaften.blue-turtle.dk
+                check-url: http://web:3000
                 icon: /assets/favicon.svg
               - title: Jellyseerr
                 url: https://findfilm.blue-turtle.dk
@@ -169,5 +170,5 @@ pages:
                 name: Bitcoin
               - symbol: ETH
                 name: Ethereum
-              - symbol: SOL
+              - symbol: SOL-USD
                 name: Solana
