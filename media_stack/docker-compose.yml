@@ -234,16 +234,14 @@ services:
       - cloudflare_tunnel
       - proxy_network
 
-  jellyseerr:
-    image: fallenbagel/jellyseerr:latest
-    container_name: jellyseerr
+  seerr:
+    image: ghcr.io/seerr-team/seerr:latest
+    init: true
+    container_name: seerr
     environment:
-      - PUID=${PUID} # UID of mediamanager
-      - PGID=${PGID} # UID of mediausers
       - TZ=${TIMEZONE}
-      - UMASK_SET=002
     volumes:
-      - /opt/docker_apps/Autorreton/jellyseerr_docker_conf:/app/config
+      - /opt/docker_apps/Autorreton/seerr_docker_conf:/app/config
     restart: unless-stopped
     networks:
       - media_network

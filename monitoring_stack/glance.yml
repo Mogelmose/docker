@@ -109,10 +109,10 @@ pages:
               - title: Home Assistant
                 url: https://home.blue-turtle.dk
                 icon: di:home-assistant
-              - title: Jellyseerr
+              - title: Seerr
                 url: https://findfilm.blue-turtle.dk
-                check-url: http://jellyseerr:5055
-                icon: di:jellyseerr            
+                check-url: http://seerr:5055
+                icon: di:seerr            
               - title: Bazarr
                 url: https://subs.blue-turtle.dk
                 check-url: http://bazarr:6767
