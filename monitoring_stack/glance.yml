@@ -4,6 +4,8 @@ theme:
   primary-color: 32 44 61
   positive-color: 46 50 33
   negative-color: 5 72 44
+server:
+  assets-path: /app/assets
 pages:
   - name: Home
     width: wide
@@ -21,7 +23,7 @@ pages:
 
           - type: clock
             hour-format: 24h
-                
+
           - type: dns-stats
             service: adguard
             url: https://dns.blue-turtle.dk
@@ -35,7 +37,7 @@ pages:
               name: home-server
               hide-mountpoints-by-default: true
               mountpoints:
-                "/": 
+                "/":
                   name: Root
                   hide: false
                 "/mnt/SanDisk":
@@ -43,7 +45,7 @@ pages:
                   hide: false
                 "/mnt/SanDisk2":
                   name: SanDisk2
-                  hide: false                
+                  hide: false
 
           - type: repository
             show-source-icons: true
@@ -59,9 +61,9 @@ pages:
             issues-limit: 3
             commits-limit: 3
             show-source-icon: true
-            
+
       # --- Central Region ---
-      - size: full    
+      - size: full
         widgets:
           - type: search
             autofocus: true
@@ -82,11 +84,11 @@ pages:
               - title: Prowlarr
                 url: https://prowlarr.blue-turtle.dk
                 check-url: http://gluetun:9696
-                icon: di:prowlarr          
+                icon: di:prowlarr
               - title: Portainer
                 url: https://docker.blue-turtle.dk
                 check-url: http://portainer:9000
-                icon: di:portainer
+                icon: auto-invert di:portainer
               - title: qBitTorrent
                 url: https://torrent.blue-turtle.dk
                 check-url: http://gluetun:8081
@@ -106,9 +108,10 @@ pages:
                 url: https://sonarr.blue-turtle.dk
                 check-url: http://sonarr:8989
                 icon: di:sonarr
-              - title: Home Assistant
-                url: https://home.blue-turtle.dk
-                icon: di:home-assistant
+              - title: Blue Turtle
+                url: https://spilleaften.blue-turtle.dk
+                check-url: http://web:3000
+                icon: /assets/favicon.svg
               - title: Seerr
                 url: https://findfilm.blue-turtle.dk
                 check-url: http://seerr:5055
@@ -167,5 +170,5 @@ pages:
                 name: Bitcoin
               - symbol: ETH
                 name: Ethereum
-              - symbol: SOL
+              - symbol: SOL-USD
                 name: Solana
