@@ -24,13 +24,6 @@ pages:
           - type: clock
             hour-format: 24h
 
-          - type: dns-stats
-            service: adguard
-            url: https://dns.blue-turtle.dk
-            username: ${env:ADGUARD_USERNAME}
-            password: ${env:ADGUARD_PASSWORD}
-            hour-format: 24h
-
           - type: server-stats
             servers:
             - type: local
@@ -48,20 +41,14 @@ pages:
                   name: SanDisk2
                   hide: false
 
-          - type: repository
-            show-source-icons: true
-            repository: Mogelmose/blue-turtle.dk
-            pull-requests-limit: 5
-            issues-limit: 3
-            commits-limit: 3
-            show-source-icon: true
-          - type: repository
-            show-source-icons: true
-            repository: Mogelmose/docker
-            pull-requests-limit: 5
-            issues-limit: 3
-            commits-limit: 3
-            show-source-icon: true
+          - type: dns-stats
+            service: adguard
+            url: https://dns.blue-turtle.dk
+            username: ${env:ADGUARD_USERNAME}
+            password: ${env:ADGUARD_PASSWORD}
+            hour-format: 24h
+
+          - type: to-do
 
       # --- Central Region ---
       - size: full
@@ -129,6 +116,21 @@ pages:
               - UCsBjURrPoezykLs9EqgamOA # Fireship
               - UCXuqSBlHAE6Xw-yeJA0Tunw # Linus Tech Tips
               - UCBJycsmduvYEL83R_U4JriQ # Marques Brownlee
+
+          - type: repository
+            show-source-icons: true
+            repository: Mogelmose/blue-turtle.dk
+            pull-requests-limit: 5
+            issues-limit: 3
+            commits-limit: 3
+            show-source-icon: true
+          - type: repository
+            show-source-icons: true
+            repository: Mogelmose/docker
+            pull-requests-limit: 5
+            issues-limit: 3
+            commits-limit: 3
+            show-source-icon: true
 
       # --- Top Right Region ---
       - size: small
