@@ -35,6 +35,7 @@ pages:
             servers:
             - type: local
               name: home-server
+              hide-swap: true
               hide-mountpoints-by-default: true
               mountpoints:
                 "/":
