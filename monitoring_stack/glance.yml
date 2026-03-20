@@ -40,6 +40,9 @@ pages:
                 "/mnt/SanDisk2":
                   name: SanDisk2
                   hide: false
+                "/mnt/SanDisk3":
+                  name: SanDisk3
+                  hide: false
 
           - type: dns-stats
             service: adguard

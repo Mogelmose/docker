@@ -112,9 +112,9 @@ services:
       - /opt/docker_apps/Autorreton/radarr_docker_conf:/config
       - /srv/jellyfin/movies:/movies
       - /srv/torrents:/downloads
-      - /mnt/USB/media/movies:/movies-USB    
       - /mnt/SanDisk/media/movies:/movies-SanDisk
       - /mnt/SanDisk2/media/movies:/movies-SanDisk2
+      - /mnt/SanDisk3/media/movies:/movies-SanDisk3
     networks:
       media_network:
         ipv4_address: 172.19.0.6
@@ -141,10 +141,10 @@ services:
     volumes:
       - /opt/docker_apps/Autorreton/sonarr_docker_conf:/config
       - /srv/jellyfin/tvshows:/tv
-      - /srv/torrents:/downloads         
-      - /mnt/USB/media/tvshows:/tv-USB       
+      - /srv/torrents:/downloads             
       - /mnt/SanDisk/media/tvshows:/tv-SanDisk
       - /mnt/SanDisk2/media/tvshows:/tv-SanDisk2
+      - /mnt/SanDisk3/media/tvshows:/tv-SanDisk3
     networks:
       media_network:
         ipv4_address: 172.19.0.5
@@ -175,12 +175,12 @@ services:
       - /opt/docker_apps/Autorreton/bazarr_docker_data:/data
       - /srv/jellyfin/movies:/movies
       - /srv/jellyfin/tvshows:/tv         
-      - /mnt/USB/media/movies:/movies-USB            
-      - /mnt/USB/media/tvshows:/tv-USB  
       - /mnt/SanDisk/media/movies:/movies-SanDisk
       - /mnt/SanDisk/media/tvshows:/tv-SanDisk
       - /mnt/SanDisk2/media/movies:/movies-SanDisk2
       - /mnt/SanDisk2/media/tvshows:/tv-SanDisk2
+      - /mnt/SanDisk3/media/movies:/movies-SanDisk3            
+      - /mnt/SanDisk3/media/tvshows:/tv-SanDisk3  
     networks: 
       - media_network
       - proxy_network
@@ -204,12 +204,12 @@ services:
       - /opt/docker_apps/Autorreton/jellyfin_docker_cache:/cache 
       - /srv/jellyfin/movies:/media/movies:ro
       - /srv/jellyfin/tvshows:/media/tvshows:ro
-      - /mnt/USB/media/movies:/media/movies-USB:ro
-      - /mnt/USB/media/tvshows:/media/tvshows-USB:ro
       - /mnt/SanDisk/media/movies:/media/movies-SanDisk:ro
       - /mnt/SanDisk/media/tvshows:/media/tv-SanDisk:ro
       - /mnt/SanDisk2/media/movies:/media/movies-SanDisk2:ro
       - /mnt/SanDisk2/media/tvshows:/media/tv-SanDisk2:ro
+      - /mnt/SanDisk3/media/movies:/media/movies-SanDisk3:ro
+      - /mnt/SanDisk3/media/tvshows:/media/tvshows-SanDisk3:ro
     devices:
       - /dev/dri:/dev/dri
     environment:
