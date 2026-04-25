@@ -6,6 +6,7 @@ services:
       - TZ=${TIMEZONE}
       - ADGUARD_USERNAME=${ADGUARD_USERNAME}
       - ADGUARD_PASSWORD=${ADGUARD_PASSWORD}
+      - GITHUB_TOEKN=${GITHUB_TOKEN}
     restart: unless-stopped
     volumes:
       - /opt/docker_apps/Monitoring/glance_docker_conf:/app/config 

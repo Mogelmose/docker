@@ -123,6 +123,7 @@ pages:
           - type: repository
             show-source-icons: true
             repository: Mogelmose/blue-turtle.dk
+            token: ${GITHUB_TOKEN}
             pull-requests-limit: 5
             issues-limit: 3
             commits-limit: 3
