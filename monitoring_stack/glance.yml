@@ -68,10 +68,10 @@ pages:
               - title: AdGuardHome
                 url: https://dns.blue-turtle.dk
                 icon: di:adguard-home
-              - title: Grafana
-                url: https://grafana.blue-turtle.dk
-                check-url: http://grafana:3000
-                icon: di:grafana
+              - title: Immich
+                url: https://cloud.blue-turtle.dk
+                check-url: http://immich-server:2283
+                icon: di:immich
               - title: Prowlarr
                 url: https://prowlarr.blue-turtle.dk
                 check-url: http://gluetun:9696
