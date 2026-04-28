@@ -1,0 +1,55 @@
+services:
+  immich-server:
+    image: ghcr.io/immich-app/immich-server:release
+    container_name: immich-server
+    volumes:
+      - ${UPLOAD_LOCATION}:/data
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - TZ=${TIMEZONE}
+      - DB_PASSWORD=${DB_PASSWORD}
+    devices:
+      - /dev/dri:/dev/dri
+    networks:
+      - immich_network
+      - proxy_network
+    depends_on:
+      immich-redis:
+        condition: service_healthy
+      immich-postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      disable: false
+
+  redis:
+    image: docker.io/valkey/valkey:9@sha256:3b55fbaa0cd93cf0d9d961f405e4dfcc70efe325e2d84da207a0a8e6d8fde4f9
+    container_name: immich-redis
+    environment:
+      - TZ=${TIMEZONE}
+    networks:
+      - immich_network
+    healthcheck:
+      test: redis-cli ping || exit 1
+    restart: always
+
+  database:
+    image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23
+    container_name: immich-postgres
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_INITDB_ARGS=--data-checksums
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${DB_LOCATION}:/var/lib/postgresql/data
+    shm_size: 128mb
+    restart: always
+    healthcheck:
+      disable: false
+
+networks:
+  immich_network:
+    driver: bridge
+    name: immich_network
+  proxy_network:
+    external: true
