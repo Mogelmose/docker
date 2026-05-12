@@ -17,6 +17,12 @@
 @import url('https://cdn.jsdelivr.net/gh/CTalvio/Ultrachromic/effects/pan-animation.css');
 @import url('https://ctalvio.github.io/Monochromic/backdrop-hack_style.css');
 
+/*Fix backdrop clipping issue*/
+#loginPage.backdropPage {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
 /*Accent and roundingd*/
 :root {--accent: 98, 121, 205;}
 :root {--rounding: 12px;}
